@@ -30,18 +30,12 @@ app.get(`/api/ticket/:id`, (req, res) => __awaiter(void 0, void 0, void 0, funct
     res.json(result);
 }));
 app.post(`/api/ticket`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nom } = req.body;
-    const { prenom } = req.body;
-    const { civiliteId } = req.body;
     const result = yield repository.addTicket(req.body);
     res.json(result);
 }));
 app.put('/api/ticket/:id/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { prenom } = req.body;
-    const { nom } = req.body;
-    const { civiliteId } = req.body;
-    const put = yield repository.updateTicket(req.body);
+    const put = yield repository.updateTicket(id, req.body);
     res.json(put);
 }));
 app.delete(`/api/ticket/:id`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
