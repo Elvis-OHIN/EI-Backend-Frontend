@@ -1,0 +1,129 @@
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Ajouter un ticket</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label for="title">Titre</label>
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" [(ngModel)]="title" required>
+				</div>
+			</div>
+      <div class="mb-3">
+				<label for="title">Description</label>
+				<div class="input-group">
+					<textarea  name="description" class="form-control" [(ngModel)]="description" maxlength="100"></textarea>
+				</div>
+			</div>
+      <input type="hidden" name="statut" class="form-control" [(ngModel)]="statut" value="à faire">
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="envoyerDonnees()">Ajouter</button>
+	</div>
+</ng-template>
+
+<pre>{{ closeResult }}</pre>
+
+
+<ng-template #contentupdate let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Modifier un ticket</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label for="title">Titre</label>
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" [(ngModel)]="title" placeholder="" required>
+				</div>
+			</div>
+      <div class="mb-3">
+				<label for="title">Description</label>
+				<div class="input-group">
+					<textarea  name="description" class="form-control" [(ngModel)]="description" maxlength="100"></textarea>
+				</div>
+			</div>
+      <div class="mb-3">
+        <label>
+          <input type="radio" name="statut" [(ngModel)]="statut"  value="à faire" checked>
+          À  faire
+        </label>
+        <br>
+        <label>
+          <input type="radio" name="statut" [(ngModel)]="statut" value="en cours" checked>
+          En cours
+        </label>
+        <br>
+        <label>
+          <input type="radio" name="statut" [(ngModel)]="statut" value="terminé" checked>
+          Terminé
+        </label>
+      </div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="updateTicket(id,title,description,statut)">Modifier</button>
+	</div>
+</ng-template>
+
+<pre>{{ closeResult }}</pre>
+
+<div class="container">
+  <h2>Ticket</h2>
+  <div class="card-container">
+    <button class="btn btn-lg btn-outline-primary" (click)="open(content);ticket_create()">Ajouter un ticket</button>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <h3>À faire</h3>
+      <div *ngFor="let item of tickets" class="mb-3">
+        <div *ngIf="item.statut === 'à faire'">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <button (click)="open(contentupdate);ticket_value(item.id,item.title,item.description,item.statut)" class="btn btn-primary">Modifier</button>
+              <button (click)="deleteTicket(item.id)" class="btn btn-danger">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>En cours</h3>
+      <div *ngFor="let item of tickets" class="mb-3">
+        <div *ngIf="item.statut === 'en cours'">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <button (click)="open(contentupdate);ticket_value(item.id,item.title,item.description,item.statut)" class="btn btn-primary">Modifier</button>
+              <button (click)="deleteTicket(item.id)" class="btn btn-danger">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>Terminé</h3>
+      <div *ngFor="let item of tickets" class="mb-3">
+        <div *ngIf="item.statut === 'terminé'">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <button (click)="open(contentupdate);ticket_value(item.id,item.title,item.description,item.statut)" class="btn btn-primary">Modifier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
